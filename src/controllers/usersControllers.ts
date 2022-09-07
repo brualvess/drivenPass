@@ -7,7 +7,7 @@ import {
 export async function createUser(req: Request, res: Response) {
     const { email, password } = req.body
     await signup(email, password)
-    res.status(201).send('registered user!')
+    res.status(201).send('user created!')
 }
 export async function loginUser(req: Request, res: Response) {
     const {email, password } = req.body
