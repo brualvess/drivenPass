@@ -17,8 +17,11 @@ export async function createUser(email: string, password:string){
 }
 export async function loginUser(email: string, password:string){
     const users = await findByEmail(email)
+    if(!users[0]){
+        throw {type:'unauthorized'}
+    }
     const verifyPassword = bcrypt.compareSync(password, users[0].password)
-    if(!users[0] || !verifyPassword){
+    if(!verifyPassword){
         throw {type:'unauthorized'}
     }
     const token = jwt.sign(email, process.env.SECRET )
