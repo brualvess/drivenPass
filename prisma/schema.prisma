@@ -24,5 +24,7 @@ model credentials {
   url String 
   username String
   password String
-  title String @unique
+  title String
+  
+   @@unique([title, userId])
 }
