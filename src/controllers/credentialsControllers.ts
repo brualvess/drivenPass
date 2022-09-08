@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import {
     createCredentials as create,
-    getById as getId
+    getById as getId,
+    getCredentials as findCredentials
 } from "../service/credentialsService.js";
 
 export async function createCredentials(req: Request, res: Response) {
@@ -19,4 +20,9 @@ export async function getById(req: Request, res: Response) {
     const response = await getId(id, userId)
 
     res.status(200).send(response);
+}
+export async function getCredentials(req: Request, res: Response){
+    const userId = req.body.userId
+    const response = await findCredentials(userId)
+    res.status(200).send(response)
 }

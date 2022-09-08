@@ -10,7 +10,8 @@ import {
 } from './controllers/usersControllers.js';
 import {
     createCredentials,
-    getById
+    getById,
+    getCredentials
 } from './controllers/credentialsControllers.js';
 import { schemaCredentials } from './schemas/credentialsSchema.js';
 import "express-async-errors";
@@ -24,6 +25,7 @@ router.post('/signin', joiValidation(schemaSignin), loginUser)
 // routes credentials
 router.post('/credential', authUser, joiValidation(schemaCredentials), createCredentials)
 router.get('/credential/:id', authUser, getById)
+router.get('/credential', authUser, getCredentials)
 
 
 

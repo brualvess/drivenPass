@@ -15,9 +15,11 @@ export async function authUser(req:Request,res:Response,next:NextFunction){
 	const secret_key = process.env.SECRET;
 
 	try {
-		jwt.verify(token, secret_key, (err, userId: any) => {
+		jwt.verify(token, secret_key, (err, userId:string) => {
 			if(err) return res.sendStatus(403);
-			req.body.userId = userId;
+			let uid : number = parseInt(userId)
+			console.log(userId)
+			req.body.userId = parseInt(userId);
 			next();
 		});
 	} catch (error) {

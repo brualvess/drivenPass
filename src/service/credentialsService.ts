@@ -1,7 +1,9 @@
 import Cryptr from 'cryptr';
 import {
      create,
-     findById, ICredentials
+     findById,
+     ICredentials,
+     findByIdUser
 } from '../repositories/credentialsRepository.js';
 
 const cryptr = new Cryptr('myTotallySecretKey')
@@ -36,4 +38,24 @@ export async function getById(id: number, userId: number) {
           title: credential.title
      }
      return obj;
+}
+export async function getCredentials(userId: number){
+     const credentials = await findByIdUser(userId)
+     if(!credentials[0]){
+          throw { type: 'not_found' }
+     }
+    const result = credentials.map(items => 
+     {
+          const obj: ICredentials = {
+               id: items.id,
+               userId: items.userId,
+               username: items.username,
+               url: items.url,
+               password: cryptr.decrypt(items.password),
+               title: items.title
+          } 
+          return obj
+     }
+      )
+      return result
 }
