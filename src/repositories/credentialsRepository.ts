@@ -23,3 +23,8 @@ export async function findByIdUser(userId:number){
     const result = await prisma.credentials.findMany({where:{userId}})
     return result
 }
+
+export async function deleteCredential(id:number){
+    const result = await prisma.credentials.delete({where:{id}})
+    return result
+}

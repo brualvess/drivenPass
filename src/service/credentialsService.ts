@@ -3,7 +3,8 @@ import {
      create,
      findById,
      ICredentials,
-     findByIdUser
+     findByIdUser,
+     deleteCredential as remove
 } from '../repositories/credentialsRepository.js';
 
 const cryptr = new Cryptr('myTotallySecretKey')
@@ -58,4 +59,16 @@ export async function getCredentials(userId: number){
      }
       )
       return result
+}
+export async function deleteCredential(id:number, userId:number){
+     const credential = await findById(id)
+     if(!credential){
+          throw { type: 'not_found' }
+     }
+     if (credential.userId != userId) {
+          throw { type: 'unauthorized' }
+     }
+ 
+     await remove(id)
+
 }
