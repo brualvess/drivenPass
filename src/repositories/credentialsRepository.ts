@@ -1,6 +1,7 @@
 import { prisma } from '../database.js';
 
 export interface ICredentials{
+    id: number,
     userId: number;
     url: string,
     username: string,
@@ -8,8 +9,12 @@ export interface ICredentials{
     title: string
 }
 
-export async function create(datas: ICredentials){
+export async function create(datas: Omit <ICredentials, 'id'>){
     const result = await prisma.credentials.create({data:datas})
-    console.log(result)
     return result
+}
+
+export async function findById(id:number){
+    const result = await prisma.credentials.findMany({where:{id}})
+    return result[0]
 }

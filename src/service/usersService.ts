@@ -24,7 +24,7 @@ export async function loginUser(email: string, password:string){
     if(!verifyPassword){
         throw {type:'unauthorized'}
     }
-    const token = jwt.sign(email, process.env.SECRET )
+    const token = jwt.sign(users[0].id.toString(), process.env.SECRET )
     return token;
     
 }

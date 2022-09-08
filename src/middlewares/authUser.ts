@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { Request, Response, NextFunction } from "express";
 
 dotenv.config();
 
 
-export async function authUser (req,res,next){
+export async function authUser(req:Request,res:Response,next:NextFunction){
 
 	const { authorization } = req.headers;
 	const token = authorization?.replace('Bearer ', '');
@@ -14,8 +15,9 @@ export async function authUser (req,res,next){
 	const secret_key = process.env.SECRET;
 
 	try {
-		jwt.verify(token, secret_key, (err) => {
+		jwt.verify(token, secret_key, (err, userId: any) => {
 			if(err) return res.sendStatus(403);
+			req.body.userId = userId;
 			next();
 		});
 	} catch (error) {
