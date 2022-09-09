@@ -14,3 +14,8 @@ export interface ICards {
 export async function create(datas: ICards) {
     await prisma.cards.create({ data: datas })
 }
+
+export async function findById(id:number){
+    const result = await prisma.cards.findUnique({where:{id}})
+    return result
+}

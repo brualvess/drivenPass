@@ -1,6 +1,7 @@
 import {
     ICards,
-    create
+    create,
+    findById
 } from "../repositories/cardsRepository.js";
 import Cryptr from 'cryptr';
 
@@ -23,11 +24,30 @@ export async function createCards(datas: ICards) {
     }
     await create(obj)
 }
-export async function getCardById() {
+export async function getCardById(id:number, userId:number) {
+    const card = await findById(id)
+    if (!card) {
+        throw { type: 'not_found' }
+   }
+   if (card.userId != userId) {
+        throw { type: 'unauthorized' }
+   }
+   const decryptedPassword = cryptr.decrypt(card.password);
+   const decryptedCvc = cryptr.decrypt(card.cvc);
 
+   const obj = {
+    userId: userId,
+    title: card.title,
+    number: card.number,
+    cardHolderName: card.cardHolderName,
+    cvc: decryptedCvc,
+    expirationDate: card.expirationDate,
+    password: decryptedPassword
+   }
+   return obj;
 }
 
-export async function getCards() {
+export async function getCards(userId:number) {
 
 }
 
