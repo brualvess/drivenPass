@@ -23,7 +23,14 @@ import {
     getNotes,
     deleteNote
 } from './controllers/secureNotesControllers.js';
+import {
+    createCard,
+    getCardById,
+    getCards,
+    deleteCard
+} from './controllers/cardsControllers.js';
 import { schemaSecureNotes } from './schemas/secureNotesSchema.js';
+import { schemaCards } from './schemas/cardsSchema.js';
 
 const router = Router()
 
@@ -40,6 +47,12 @@ router.post('/secureNotes', authUser, joiValidation(schemaSecureNotes), createNo
 router.get('/secureNotes/:id', authUser, getNoteById)
 router.get('/secureNotes', authUser, getNotes)
 router.delete('/secureNotes/:id', authUser, deleteNote)
+//routes cards
+router.post('/card', authUser, joiValidation(schemaCards), createCard )
+//router.get('card/:id', authUser, getCardById)
+//router.get('card', authUser, getCards)
+//router.delete('card/:id', authUser, deleteCard)
+
 
 
 
