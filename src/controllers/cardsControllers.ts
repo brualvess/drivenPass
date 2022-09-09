@@ -3,7 +3,8 @@ import { ICards } from "../repositories/cardsRepository.js";
 import {
     createCards,
     getCardById as getById,
-    getCards as findCards
+    getCards as findCards,
+    deleteCard as remove
 } from "../service/cardsService.js";
 
 export async function createCard(req: Request, res: Response) {
@@ -28,5 +29,9 @@ export async function getCards(req: Request, res: Response) {
 }
 
 export async function deleteCard(req: Request, res: Response) {
+    const id = Number(req.params.id)
+    const userId = req.body.userId
 
+    await remove(id, userId);
+    res.status(200).send('deleted card')
 }

@@ -2,7 +2,8 @@ import {
     ICards,
     create,
     findById,
-    findByIdUser
+    findByIdUser,
+    deleteCard as remove
 } from "../repositories/cardsRepository.js";
 import Cryptr from 'cryptr';
 
@@ -76,6 +77,14 @@ export async function getCards(userId: number) {
          return result
 }
 
-export async function deleteCards() {
+export async function deleteCard(id: number, userId:number) {
+    const cards = await findById(id)
+    if(!cards){
+         throw { type: 'not_found' }
+    }
+    if (cards.userId != userId) {
+         throw { type: 'unauthorized' }
+    }
 
+    await remove(id)
 }
