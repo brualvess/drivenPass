@@ -49,7 +49,7 @@ model cards {
   number         String
   cardHolderName String
   cvc            String
-  expirationDate DateTime
+  expirationDate String
   password       String
   isVirtual      Boolean
   type           String
