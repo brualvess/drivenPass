@@ -30,3 +30,4 @@ const decryptedNote = cryptr.decrypt(note.note);
  }
  return obj;
 }
+
