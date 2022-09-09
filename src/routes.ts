@@ -17,6 +17,11 @@ import {
 import { schemaCredentials } from './schemas/credentialsSchema.js';
 import "express-async-errors";
 import { authUser } from './middlewares/authUser.js';
+import {
+    createNotes,
+    getNoteById
+} from './controllers/secureNotesControllers.js';
+import { schemaSecureNotes } from './schemas/secureNotesSchema.js';
 
 const router = Router()
 
@@ -28,6 +33,9 @@ router.post('/credential', authUser, joiValidation(schemaCredentials), createCre
 router.get('/credential/:id', authUser, getById)
 router.get('/credential', authUser, getCredentials)
 router.delete('/credential/:id', authUser, deleteCredential)
+//routes secure notes
+router.post('/secureNotes', authUser, joiValidation(schemaSecureNotes), createNotes)
+router.get('/secureNotes/:id', authUser, getNoteById)
 
 
 

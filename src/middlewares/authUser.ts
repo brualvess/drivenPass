@@ -17,8 +17,6 @@ export async function authUser(req:Request,res:Response,next:NextFunction){
 	try {
 		jwt.verify(token, secret_key, (err, userId:string) => {
 			if(err) return res.sendStatus(403);
-			let uid : number = parseInt(userId)
-			console.log(userId)
 			req.body.userId = parseInt(userId);
 			next();
 		});
