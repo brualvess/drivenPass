@@ -16,6 +16,7 @@ model users {
   password    String
   credentials credentials[]
   secureNotes secureNotes[]
+  cards       cards[]
 }
 
 model credentials {
@@ -36,6 +37,22 @@ model secureNotes {
   userId Int
   title  String @db.VarChar(50)
   note   String @db.VarChar(1000)
+
+  @@unique([title, userId])
+}
+
+model cards {
+  id             Int      @id @default(autoincrement())
+  user           users    @relation(fields: [userId], references: [id])
+  userId         Int
+  title          String
+  number         String
+  cardHolderName String
+  cvc            String
+  expirationDate DateTime
+  password       String
+  isVirtual      Boolean
+  type           String
 
   @@unique([title, userId])
 }
