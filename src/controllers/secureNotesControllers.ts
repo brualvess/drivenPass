@@ -10,7 +10,7 @@ import {
 export async function createNotes(req: Request, res: Response) {
     const datas: ISecureNotes = req.body
     await create(datas)
-    res.status(200).send('create note')
+    res.status(201).send('create note')
 }
 export async function getNoteById(req: Request, res: Response) {
     const id = Number(req.params.id)
