@@ -1,18 +1,18 @@
 import {
     ICards,
     create,
-    findById
+    findById,
+    findByIdUser
 } from "../repositories/cardsRepository.js";
 import Cryptr from 'cryptr';
 
 const cryptr = new Cryptr('myTotallySecretKey')
 
-export async function createCards(datas: ICards) {
+export async function createCards(datas:Omit <ICards, 'id'>) {
     const encryptedPassword = cryptr.encrypt(datas.password);
     const encryptedCvc = cryptr.encrypt(datas.cvc);
-    const obj:ICards = {
-     
-        userId: datas.userId,   
+    const obj: Omit <ICards, 'id'> = {
+        userId: datas.userId,
         title: datas.title,
         number: datas.number,
         cardHolderName: datas.cardHolderName,
@@ -24,31 +24,56 @@ export async function createCards(datas: ICards) {
     }
     await create(obj)
 }
-export async function getCardById(id:number, userId:number) {
+export async function getCardById(id: number, userId: number) {
     const card = await findById(id)
     if (!card) {
         throw { type: 'not_found' }
-   }
-   if (card.userId != userId) {
+    }
+    if (card.userId != userId) {
         throw { type: 'unauthorized' }
-   }
-   const decryptedPassword = cryptr.decrypt(card.password);
-   const decryptedCvc = cryptr.decrypt(card.cvc);
+    }
+    const decryptedPassword = cryptr.decrypt(card.password);
+    const decryptedCvc = cryptr.decrypt(card.cvc);
 
-   const obj = {
-    userId: userId,
-    title: card.title,
-    number: card.number,
-    cardHolderName: card.cardHolderName,
-    cvc: decryptedCvc,
-    expirationDate: card.expirationDate,
-    password: decryptedPassword
-   }
-   return obj;
+    const obj:ICards = {
+        id: id,
+        userId: userId,
+        title: card.title,
+        number: card.number,
+        cardHolderName: card.cardHolderName,
+        cvc: decryptedCvc,
+        expirationDate: card.expirationDate,
+        password: decryptedPassword,
+        isVirtual: card.isVirtual,
+        type: card.type
+    }
+    return obj;
 }
 
-export async function getCards(userId:number) {
+export async function getCards(userId: number) {
+    const cards = await findByIdUser(userId)
 
+    if (!cards[0]) {
+        throw { type: 'not_found' }
+    }
+    const result = cards.map(items => 
+        {
+             const obj: ICards = {
+                id: items.id,
+                  userId:userId,
+                  title: items.title,
+                  number: items.number,
+                  cardHolderName: items.cardHolderName,
+                  cvc: cryptr.decrypt(items.cvc),
+                  expirationDate: items.expirationDate,
+                  password: cryptr.decrypt(items.password),
+                  isVirtual: items.isVirtual,
+                  type: items.type
+             } 
+             return obj
+        }
+         )
+         return result
 }
 
 export async function deleteCards() {

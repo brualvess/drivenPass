@@ -1,5 +1,6 @@
 import { prisma } from '../database.js';
 export interface ICards {
+    id: number
     userId: number
     title: string
     number: string
@@ -11,11 +12,15 @@ export interface ICards {
     type: string
 }
 
-export async function create(datas: ICards) {
+export async function create(datas: Omit <ICards, 'id'>) {
     await prisma.cards.create({ data: datas })
 }
 
 export async function findById(id:number){
     const result = await prisma.cards.findUnique({where:{id}})
+    return result
+}
+export async function findByIdUser(userId:number){
+    const result = await prisma.cards.findMany({where:{userId}})
     return result
 }

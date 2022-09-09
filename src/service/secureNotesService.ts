@@ -9,9 +9,9 @@ import Cryptr from 'cryptr';
 
 const cryptr = new Cryptr('myTotallySecretKey')
 
-export async function createNotes(datas: ISecureNotes) {
+export async function createNotes(datas: Omit <ISecureNotes, 'id'>) {
     const encryptedPassword = cryptr.encrypt(datas.note);
-    const obj: ISecureNotes = {
+    const obj: Omit <ISecureNotes, 'id'> = {
         userId: datas.userId,
         title: datas.title,
         note: encryptedPassword
@@ -28,7 +28,8 @@ export async function getNoteById(id: number, userId: number) {
         throw { type: 'unauthorized' }
     }
     const decryptedNote = cryptr.decrypt(note.note);
-    const obj = {
+    const obj : ISecureNotes = {
+        id: id,
         userId: userId,
         title: note.title,
         note: decryptedNote

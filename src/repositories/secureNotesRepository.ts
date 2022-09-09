@@ -1,10 +1,11 @@
 import { prisma } from '../database.js';
 export interface ISecureNotes{
+    id: number,
     userId: number,
     title: string,
     note: string
 }
-export async function create(datas: ISecureNotes){
+export async function create(datas:Omit <ISecureNotes, 'id'>){
      await prisma.secureNotes.create({data:datas})
 }
 export async function findById(id:number){

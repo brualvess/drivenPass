@@ -50,7 +50,7 @@ router.delete('/secureNotes/:id', authUser, deleteNote)
 //routes cards
 router.post('/card', authUser, joiValidation(schemaCards), createCard )
 router.get('/card/:id', authUser, getCardById)
-//router.get('/card', authUser, getCards)
+router.get('/card', authUser, getCards)
 //router.delete('/card/:id', authUser, deleteCard)
 
 

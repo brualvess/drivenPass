@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { ICards } from "../repositories/cardsRepository.js";
 import {
     createCards,
-    getCardById as getById
+    getCardById as getById,
+    getCards as findCards
 } from "../service/cardsService.js";
 
 export async function createCard(req: Request, res: Response) {
@@ -20,7 +21,10 @@ export async function getCardById(req: Request, res: Response) {
 }
 
 export async function getCards(req: Request, res: Response) {
+    const userId = req.body.userId
+    const response = await findCards(userId)
 
+        res.status(200).send(response);
 }
 
 export async function deleteCard(req: Request, res: Response) {
