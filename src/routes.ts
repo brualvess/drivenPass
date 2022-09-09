@@ -19,7 +19,9 @@ import "express-async-errors";
 import { authUser } from './middlewares/authUser.js';
 import {
     createNotes,
-    getNoteById
+    getNoteById,
+    getNotes,
+    deleteNote
 } from './controllers/secureNotesControllers.js';
 import { schemaSecureNotes } from './schemas/secureNotesSchema.js';
 
@@ -36,6 +38,8 @@ router.delete('/credential/:id', authUser, deleteCredential)
 //routes secure notes
 router.post('/secureNotes', authUser, joiValidation(schemaSecureNotes), createNotes)
 router.get('/secureNotes/:id', authUser, getNoteById)
+router.get('/secureNotes', authUser, getNotes)
+router.delete('/secureNotes/:id', authUser, deleteNote)
 
 
 

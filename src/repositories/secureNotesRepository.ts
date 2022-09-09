@@ -16,3 +16,6 @@ export async function findByUserId(userId:number){
     const result = await prisma.secureNotes.findMany({where:{userId}})
     return result
 }
+export async function deleteNote(id:number){
+     await prisma.secureNotes.delete({where:{id}})
+}
