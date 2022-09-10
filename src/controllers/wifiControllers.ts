@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { IWifi } from "../repositories/wifiRepository.js";
 import {
     createWifi as create,
-    getById
+    getById,
+    getWifis
 } from "../service/wifiService.js";
 
 export async function createWifi(req: Request, res: Response) {
@@ -21,9 +22,9 @@ export async function getWifiById(req: Request, res: Response) {
 
 export async function getWifi(req: Request, res: Response) {
     const userId = req.body.userId
-    const response =
+    const response = await getWifis(userId)
 
-        res.status(200).send();
+        res.status(200).send(response);
 }
 
 export async function deleteWifi(req: Request, res: Response) {

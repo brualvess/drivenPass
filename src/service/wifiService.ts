@@ -39,3 +39,26 @@ export async function getById(id: number, userId: number) {
     }
     return obj;
 }
+
+export async function getWifis(userId: number) {
+    const wifis = await findByIdUser(userId)
+
+    if (!wifis[0]) {
+        throw { type: 'not_found' }
+    }
+    const decryptedPassword = cryptr.decrypt(wifis[0].password);
+    const result = wifis.map(items => 
+        {
+             const obj: IWifi = {
+                id: items.id,
+                  userId:userId,
+                  title: items.title,
+                  network: items.network,
+                  password: decryptedPassword,
+                  
+             } 
+             return obj
+        }
+         )
+         return result
+}
