@@ -33,5 +33,5 @@ export async function deleteWifi(req: Request, res: Response) {
     const userId = req.body.userId
 
     await remove(id, userId)
-    res.status(200).send('deleted wifi')
+    res.status(204).send('deleted wifi')
 }

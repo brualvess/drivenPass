@@ -27,5 +27,5 @@ export async function deleteNote(req: Request, res: Response) {
     const id = Number(req.params.id)
     const userId = req.body.userId
     await removeNote(id, userId)
-    res.status(200).send('deleted successfully !')
+    res.status(204).send('deleted successfully !')
 }

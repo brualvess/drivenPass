@@ -32,5 +32,5 @@ export async function deleteCredential(req: Request, res: Response){
     const id = Number(req.params.id)
     const userId = req.body.userId
     await remove (id, userId)
-    res.status(200).send('deleted credential !')
+    res.status(204).send('deleted credential !')
 }

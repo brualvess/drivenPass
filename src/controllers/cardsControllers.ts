@@ -33,5 +33,5 @@ export async function deleteCard(req: Request, res: Response) {
     const userId = req.body.userId
 
     await remove(id, userId);
-    res.status(200).send('deleted card')
+    res.status(204).send('deleted card')
 }
