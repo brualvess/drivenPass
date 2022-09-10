@@ -3,7 +3,8 @@ import { IWifi } from "../repositories/wifiRepository.js";
 import {
     createWifi as create,
     getById,
-    getWifis
+    getWifis,
+    deleteWifi as remove
 } from "../service/wifiService.js";
 
 export async function createWifi(req: Request, res: Response) {
@@ -17,20 +18,20 @@ export async function getWifiById(req: Request, res: Response) {
     const userId = req.body.userId
     const response = await getById(id, userId)
 
-        res.status(200).send(response);
+    res.status(200).send(response);
 }
 
 export async function getWifi(req: Request, res: Response) {
     const userId = req.body.userId
     const response = await getWifis(userId)
 
-        res.status(200).send(response);
+    res.status(200).send(response);
 }
 
 export async function deleteWifi(req: Request, res: Response) {
     const id = Number(req.params.id)
     const userId = req.body.userId
 
-
+    await remove(id, userId)
     res.status(200).send('deleted wifi')
 }

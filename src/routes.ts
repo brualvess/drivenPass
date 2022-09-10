@@ -63,7 +63,7 @@ router.delete('/card/:id', authUser, deleteCard)
 router.post('/wifi', authUser, joiValidation(schemaWifi), createWifi)
 router.get('/wifi/:id', authUser, getWifiById)
 router.get('/wifi', authUser, getWifi)
-// router.delete('/wifi/:id', authUser, deleteWifi)
+router.delete('/wifi/:id', authUser, deleteWifi)
 
 
 

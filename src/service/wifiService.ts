@@ -4,7 +4,7 @@ import {
     create,
     findById,
     findByIdUser,
-    deleteWifi
+    deleteWifi as remove
 } from "../repositories/wifiRepository.js";
 
 const cryptr = new Cryptr('myTotallySecretKey')
@@ -61,4 +61,16 @@ export async function getWifis(userId: number) {
         }
          )
          return result
+}
+export async function deleteWifi(id:number, userId: number){
+        const wifis = await findById(id)
+        if(!wifis){
+             throw { type: 'not_found' }
+        }
+        if (wifis.userId != userId) {
+             throw { type: 'unauthorized' }
+        }
+    
+        await remove(id)
+    
 }
