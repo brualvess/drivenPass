@@ -31,6 +31,13 @@ import {
 } from './controllers/cardsControllers.js';
 import { schemaSecureNotes } from './schemas/secureNotesSchema.js';
 import { schemaCards } from './schemas/cardsSchema.js';
+import {
+    createWifi,
+    getWifiById,
+    getWifi,
+    deleteWifi
+} from './controllers/wifiControllers.js';
+import { schemaWifi } from './schemas/wifiSchema.js';
 
 const router = Router()
 
@@ -48,10 +55,15 @@ router.get('/secureNotes/:id', authUser, getNoteById)
 router.get('/secureNotes', authUser, getNotes)
 router.delete('/secureNotes/:id', authUser, deleteNote)
 //routes cards
-router.post('/card', authUser, joiValidation(schemaCards), createCard )
+router.post('/card', authUser, joiValidation(schemaCards), createCard)
 router.get('/card/:id', authUser, getCardById)
 router.get('/card', authUser, getCards)
 router.delete('/card/:id', authUser, deleteCard)
+// routes wifi
+router.post('/wifi', authUser, joiValidation(schemaWifi), createWifi)
+router.get('/wifi/:id', authUser, getWifiById)
+// router.get('/wifi', authUser, getWifi)
+// router.delete('/wifi/:id', authUser, deleteWifi)
 
 
 
